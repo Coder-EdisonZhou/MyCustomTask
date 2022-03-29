@@ -1,0 +1,12 @@
+.vs/
+bin/
+obj/
+**/Log/*.txt
+*.user
+*.vssscc
+*.vspscc
+dist/
+.idea/
+*.DS_Store
+
+package-lock.json
