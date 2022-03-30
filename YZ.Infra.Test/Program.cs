@@ -16,6 +16,9 @@ namespace YZ.Infra.Test
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// 01.使用默认TaskScheduler调度器：基于线程池调度
+        /// </summary>
         private static void Demo1_JobRun()
         {
             _ = Job.Run(() => Console.WriteLine($"Job1 is excuted in thread {Thread.CurrentThread.ManagedThreadId}"));
@@ -23,6 +26,9 @@ namespace YZ.Infra.Test
             _ = Job.Run(() => Console.WriteLine($"Job3 is excuted in thread {Thread.CurrentThread.ManagedThreadId}"));
         }
 
+        /// <summary>
+        /// 02.使用自定义TaskScheduler调度器：使用指定线程调度
+        /// </summary>
         private static void Demo2_DedicatedThreadJobScheduler()
         {
             JobScheduler.Current = new DedicatedThreadJobScheduler(2);
@@ -34,6 +40,10 @@ namespace YZ.Infra.Test
             _ = Job.Run(() => Console.WriteLine($"Job6 is excuted in thread {Thread.CurrentThread.ManagedThreadId}"));
         }
 
+        /// <summary>
+        /// 03.模拟Task.ContinueWith进行异步等待
+        /// 要点：多个Job则可以按照预先编排的顺序构成一个链表
+        /// </summary>
         private static void Demo3_ContinueWith()
         {
             Job.Run(() =>
@@ -65,6 +75,10 @@ namespace YZ.Infra.Test
             });
         }
 
+        /// <summary>
+        /// 04.实现await关键字的使用
+        /// 要点：实现了ICriticalNotifyCompletion接口的JobAwaiter结构体
+        /// </summary>
         private static async void Demo4_GetAwaiter()
         {
             await Foo();
